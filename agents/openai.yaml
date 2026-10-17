@@ -1,0 +1,4 @@
+interface:
+  display_name: "Screen Studio 智能初剪"
+  short_description: "自然讲解录屏初剪，保留人工修改，可回到 Screen Studio 精修"
+  default_prompt: "使用 $screenstudio-edit 剪辑这个 Screen Studio 工程，保留音画同步和已有人工修改。"
