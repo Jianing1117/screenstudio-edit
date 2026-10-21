@@ -2,15 +2,7 @@
 
 [中文](README.md) | English
 
-This is an automated editing skill that I use myself and keep iterating on. I wanted an automated editing workflow that actually works, so I can produce good content efficiently.
-
-This version handles the first step: a rough cut of Screen Studio recordings, aimed at slide and whiteboard walkthrough videos. Next I will add smart editing for talking-head videos, and gradually bring every editing step I use for content into this skill.
-
-It takes over a lot of repetitive, tedious editing: it removes dead air, failed retakes and verbal slips, and works out the cut points and screen changes for you. It then saves a copy of the project that you can keep refining in Screen Studio. The original project is never modified.
-
-The heaviest work is done by local scripts, without the AI. The audio is transcribed to text first, and the AI edits based on that text, so it uses very few tokens. When you edit the same recording again, the transcript and detection results are reused.
-
-It is an Agent Skill: any AI assistant that can read `SKILL.md` and run commands, such as Claude Code or Codex, can use it. Not affiliated with Screen Studio.
+The most time-consuming part of editing a screen recording is cutting out dead air, failed retakes, and verbal slips, one after another. This skill has an AI do that rough cut on a Screen Studio recording and saves a separate copy you can keep refining; not a single byte of the original is changed. Local scripts do the heavy work and the AI only reads the transcript, so it uses very few tokens. It's the first step of an editing workflow I use myself and keep iterating, built for slide and whiteboard walkthroughs; it runs on Claude Code, Codex, or any assistant that can run commands, and is not affiliated with Screen Studio.
 
 ## What it does
 
