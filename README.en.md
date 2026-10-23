@@ -17,7 +17,7 @@ Out of scope: plain MP4 editing, subtitles, background removal, swapping slide f
 
 - macOS and a Screen Studio 4 project (`.screenstudio`): one scene, one recording session, with microphone and screen recording; a camera is optional
 - Python 3.11 or newer and ffmpeg: `brew install python ffmpeg`
-- Xcode Command Line Tools (`xcrun clang`) for local Apple Vision text zooms; no images are uploaded
+- Xcode Command Line Tools (`xcrun clang`) for local Apple Vision text zooms; the assistant may inspect selected frames for review
 - Transcription uses FunASR on Alibaba Cloud Bailian through the Bailian CLI:
 
   ```bash
@@ -65,7 +65,7 @@ The skill instructions (`SKILL.md`) are written in Chinese; AI assistants follow
 ## Safety and privacy
 
 - The original project is read-only. Results are saved as new copies and never overwrite existing files.
-- Transcription is the only step that goes online: it uploads the microphone track to Alibaba Cloud Bailian. Detection and editing run on your machine.
+- The scripts only upload audio during transcription, to Alibaba Cloud Bailian. Detection, OCR and editing run on your machine. The assistant reads the transcript and may inspect selected frames for zoom review.
 - Keystroke logs are read for timing only, never for which keys were pressed.
 - No keys or credential files are read. Bailian authorization is handled by `bl` itself.
 - Transcripts and detection results are cached in `~/.screenstudio-edit` (change it with the `SCREENSTUDIO_EDIT_HOME` environment variable). Copying a project or changing file times does not invalidate the cache; delete the folder and the next run transcribes again.

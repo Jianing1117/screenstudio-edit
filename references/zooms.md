@@ -26,6 +26,6 @@
 
 使用当前工作目录的 `media/key.json` 与 `media/transcript.json`；其他同源 prepare 目录用 `--cache-from /path/旧工作目录`。无绑定转录时只出待复核项，绝不自动上传或重转录。缓存按录制内容、鼠标轨迹、转录和检测版本分目录；重复运行复用抽帧及 OCR。工程、鼠标或媒体有变更时执行会拒绝旧证据。
 
-需要 macOS Vision 和 Xcode Command Line Tools（`xcrun clang`）；首次调用把随附的 Objective-C 小工具编译进工作目录，不安装 Python OCR 包、不上传图片。缺依赖时说明并保留初剪，不能声称已完成缩放。当前支持原始全幅裁剪；工程另有画面裁剪时暂停此阶段，人工处理。
+需要 macOS Vision 和 Xcode Command Line Tools（`xcrun clang`）；首次调用把随附的 Objective-C 小工具编译进工作目录，不安装 Python OCR 包、不调用云端 OCR。AI 复核时才按需查看单帧。缺依赖时说明并保留初剪，不能声称已完成缩放。当前支持原始全幅裁剪；工程另有画面裁剪时暂停此阶段，人工处理。
 
 缩放规则保守，可能漏掉没有鼠标指示的重点或 OCR 认错的文字；在 Screen Studio 实际检查新增段，再交付。汇报程序验证、原生画面检查和用户听审的实际范围，不能互相替代。

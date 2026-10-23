@@ -17,7 +17,7 @@
 
 - macOS 和 Screen Studio 4 的工程（`.screenstudio`），单场景、单次录制，带麦克风和屏幕录制，摄像头可有可无
 - Python 3.11 或更新版本、ffmpeg：`brew install python ffmpeg`
-- 本地文字缩放需要 Xcode Command Line Tools（`xcrun clang`），使用系统 Apple Vision，不上传图片
+- 本地文字缩放需要 Xcode Command Line Tools（`xcrun clang`），使用系统 Apple Vision；AI 复核时可按需查看单帧
 - 语音转写用阿里云百炼的 FunASR，需要百炼 CLI：
 
   ```bash
@@ -63,7 +63,7 @@ AI 不会真的去听成片。交付前请自己在 Screen Studio 里完整听�
 ## 安全与隐私
 
 - 原工程只读；成品另存，从不覆盖已有文件。
-- 只有转写这一步联网，会把麦克风音轨上传到百炼；检测和剪辑都在本机完成。
+- 脚本只在转写时上传麦克风音轨到百炼；检测、OCR 和剪辑都在本机完成。AI 会读取转写，复核缩放时可按需查看少量候选帧。
 - 按键记录只读取时间，不读取按了什么。
 - 不读取任何密钥或凭据文件，百炼授权由 `bl` 自己管理。
 - 转写、检测结果缓存在 `~/.screenstudio-edit`（可用环境变量 `SCREENSTUDIO_EDIT_HOME` 换位置）。复制工程、改文件时间都不会让缓存失效；删掉这个目录，下次就要重新转写。
