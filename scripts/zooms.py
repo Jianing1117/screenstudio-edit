@@ -91,6 +91,14 @@ def speech_match(text, speech):
     return hits >= 3 and hits/max(1, len(grams)) >= .22
 
 
+def nearby_speech(sentences, start, end):
+    # A long ASR sentence can span several pointed-at items. Use word timing
+    # so a phrase spoken elsewhere in that sentence cannot justify this zoom.
+    return ''.join(w['text'] for s in sentences
+                   for w in (s.get('words') or [s])
+                   if w['begin_time'] < end+3000 and w['end_time'] > start-3000)
+
+
 def text_target(lines, point):
     def distance(line):
         x, y, w, h = line['box01']
@@ -177,7 +185,7 @@ def prepare(args):
         target = text_target(evidence['lines'], item['point01'])
         if target is None:
             continue
-        speech = ''.join(s['text'] for s in transcript if s['begin_time'] < b+3000 and s['end_time'] > a-3000)
+        speech = nearby_speech(transcript, a, b)
         reasons = []
         if not target['fits_2x']:
             reasons.append('line_would_be_cropped')

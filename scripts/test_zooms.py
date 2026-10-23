@@ -61,6 +61,11 @@ def main():
     check('speech match supports normalized English', zooms.speech_match('Small text example', 'A small text example is here.'))
     check('speech match supports Chinese', zooms.speech_match('把模糊想法用日常语言告诉AI', '你可以把模糊想法用日常语言告诉 AI 就可以了'))
     check('unrelated speech is not a match', not zooms.speech_match('Small text example', 'look at another slide'))
+    timed = [{'begin_time': 0, 'end_time': 20000, 'text': 'old phrase current words', 'words': [
+        {'begin_time': 0, 'end_time': 1000, 'text': 'old phrase'},
+        {'begin_time': 15000, 'end_time': 17000, 'text': 'current words'}]}]
+    check('long sentences cannot leak distant phrases into a zoom', zooms.nearby_speech(timed, 15000, 16000) == 'current words')
+    check('sentence fallback supports imported evidence without words', zooms.nearby_speech([{k: v for k, v in timed[0].items() if k != 'words'}], 15000, 16000) == timed[0]['text'])
 
     project_path = root / 'demo.screenstudio'
     recording = project_path / 'recording'
