@@ -401,11 +401,15 @@ def main():
     p.add_argument('--output', required=True)
     p.add_argument('--start-ms', type=float, default=0)
     p.add_argument('--end-ms', type=float)
+    import zooms
+    zooms.register(sub)
     args = parser.parse_args()
     try:
         if args.command == 'prepare':
             require(0 <= args.keep_ms < args.pause_ms and args.pause_ms >= 120 and args.min_fragment_ms > 0, '停顿参数无效。')
-        if args.command == 'preview':
+        if args.command in {'zoom-prepare', 'zooms', 'zoom-apply'}:
+            emit({'zoom-prepare': zooms.prepare, 'zooms': zooms.query, 'zoom-apply': zooms.apply}[args.command](args))
+        elif args.command == 'preview':
             from preview import preview
             preview(args)
         else:

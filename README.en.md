@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-The most time-consuming part of editing a screen recording is cutting out dead air, failed retakes, and verbal slips, one after another. This skill has an AI do that rough cut on a Screen Studio recording and saves a separate copy you can keep refining; not a single byte of the original is changed. Local scripts do the heavy work and the AI only reads the transcript, so it uses very few tokens. It's the first step of an editing workflow I use myself and keep iterating, built for slide and whiteboard walkthroughs; it runs on Claude Code, Codex, or any assistant that can run commands, and is not affiliated with Screen Studio.
+The most time-consuming part of editing a screen recording is cutting out dead air, failed retakes, and verbal slips, one after another. This skill has an AI do that rough cut, add suitable zooms on pointed-at text, and save a separate copy you can keep refining; not a single byte of the original is changed. Local scripts do the heavy work and the AI reads the transcript plus a few uncertain zoom candidates, keeping token use low. It's the first step of an editing workflow I use myself and keep iterating, built for slide and whiteboard walkthroughs; it runs on Claude Code, Codex, or any assistant that can run commands, and is not affiliated with Screen Studio.
 
 ## What it does
 
@@ -17,6 +17,7 @@ Out of scope: plain MP4 editing, subtitles, background removal, swapping slide f
 
 - macOS and a Screen Studio 4 project (`.screenstudio`): one scene, one recording session, with microphone and screen recording; a camera is optional
 - Python 3.11 or newer and ffmpeg: `brew install python ffmpeg`
+- Xcode Command Line Tools (`xcrun clang`) for local Apple Vision text zooms; no images are uploaded
 - Transcription uses FunASR on Alibaba Cloud Bailian through the Bailian CLI:
 
   ```bash
@@ -47,12 +48,15 @@ Tell your AI assistant:
 - "Only remove dead air, don't cut any content"
 - After editing in Screen Studio: "Continue editing this version"
 
-It works in four steps:
+It works in five steps:
 
 1. **Prepare**: opens the project read-only, transcribes the narration, and detects pauses and screen activity (clicks, key presses, screen changes). It asks for your consent before the first transcription.
 2. **Write the plan**: the AI reads the transcript and decides which retakes to remove. Pauses with on-screen activity are checked one by one, and kept where viewers need time to read the screen.
 3. **Dry run**: the scripts validate the plan, compute the final cut points, and report how much was removed and which uncertain spots were kept.
 4. **Save a copy**: the result is saved next to the source project as `<name>-初剪-v1.screenstudio` (初剪 means "rough cut"); the next run produces v2. Open it in Screen Studio to keep refining.
+5. **Pointer zooms**: recent pointer arrivals and horizontal gestures are checked against nearby speech, sparse frames and local OCR. Suitable text gets an editable native 2× zoom in `<rough-cut-name>-指示缩放.screenstudio`. Existing zooms take priority; cut points and duration stay the same. Say “no extra zooms” to skip this stage.
+
+Long lines and changing screens keep their full view. The AI only reviews a few uncertain candidates, rather than watching every video frame. You can adjust the resulting zooms in Screen Studio.
 
 The AI does not actually listen to the result. Please watch and listen to the whole cut in Screen Studio before you publish.
 
